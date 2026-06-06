@@ -112,7 +112,7 @@ int ending()
 
     if(DeviceSoc != -1)
     {
-        strcpy(if_req.ifr_name, Param.Device);
+        strcpy(if_req.ifr_name, Param.device);
         if (ioctl(DeviceSoc, SIOCGIFFLAGS, &if_req) < 0)
         {
             perror("ioctl");
