@@ -161,25 +161,17 @@ int show_ifreq(char *name)
     if(ifreq.ifr_flags & IFF_POINTOPOINT) { printf("P2P "); }
     printf("\n");
 
-    if(ioctl(soc, SIOCGIFMTU, &ifreq) < 0)
-    {
+    if(ioctl(soc, SIOCGIFMTU, &ifreq) < 0) {
         perror("ioctl:mtu");
-    }
-    else
-    {
+    } else {
         printf("MTU: %d\n", ifreq.ifr_mtu);
     }
 
-    if(ioctl(soc, SIOCGIFADDR, &ifreq) < 0)
-    {
+    if(ioctl(soc, SIOCGIFADDR, &ifreq) < 0) {
         perror("ioctl:addr");
-    }
-    else if (ifreq.ifr_addr.sa_family != AF_INET)
-    {
+    } else if (ifreq.ifr_addr.sa_family != AF_INET) {
         printf("Not AF_INET\n");
-    }
-    else
-    {
+    } else {
         memcpy(&addr, &ifreq.ifr_addr, sizeof(struct sockaddr_in));
         printf("IP: %s\n", inet_ntop(AF_INET, &addr.sin_addr, buf1, sizeof(buf1)));
         Param.myip = addr.sin_addr;
@@ -187,13 +179,10 @@ int show_ifreq(char *name)
 
     close(soc);
 
-    if (GetMacAddress(name, Param.mymac) < 0)
-    {
+    if (GetMacAddress(name, Param.mymac) < 0) {
         printf("Failed to get MAC address\n");
         return(-1);
-    }
-    else
-    {
+    } else {
         printf("MAC: %s\n", my_ether_ntoa_r(Param.mymac, buf1));
     }
 
@@ -264,6 +253,7 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Failed to create MyEthThread\n");
         exit(-1);
     }
+    
     if (pthread_create(&thread_id, &attr, StdInThread, NULL) != 0)
     {
         fprintf(stderr, "Failed to create StdInThread\n");
